@@ -1,5 +1,16 @@
+import { useGetAllProducts } from "../services/queries";
+
 function ProductsPage() {
-  return <div>ProductsPage</div>;
+  const {data,isPending,error}=useGetAllProducts()
+  console.log(data)
+ if (isPending) return <p>Loading...</p>;
+
+ if (error) return <p>Something went wrong!</p>;
+
+  return <div>
+      <h4>Products List:</h4>
+      <ul>{data?.data?.data?.map((product)=>(<li key={product.id}>{product.name}</li>))}</ul>
+      </div>
 }
 
 export default ProductsPage;
