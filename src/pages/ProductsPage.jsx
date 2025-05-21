@@ -1,19 +1,29 @@
+import { useState } from "react";
 import AddProductForm from "../components/AddProductForm";
+import ProductCard from "../components/ProductCard";
 import { useGetAllProducts } from "../services/queries";
 
 function ProductsPage() {
-  const {data,isPending,error}=useGetAllProducts()
-  console.log(data)
- if (isPending) return <p>Loading...</p>;
+  const [page, setPage] = useState(1);
+  const { data, isPending, error } = useGetAllProducts(page);
+  console.log(data);
+  if (isPending) return <p>Loading...</p>;
 
- if (error) return <p>Something went wrong!</p>;
+  if (error) return <p>Something went wrong!</p>;
 
-  return <div>
+  return (
+    <div>
       <h4>Products List:</h4>
-      <ul>{data?.map((product)=>(<li key={product.id}>{product.name}</li>))}</ul>
+      <ul>
+        {data?.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+        <button onClick={() => setPage(2)}>go to page #2</button>
+      </ul>
 
-      <AddProductForm/>
-      </div>
+      <AddProductForm />
+    </div>
+  );
 }
 
 export default ProductsPage;
