@@ -1,3 +1,4 @@
+import AddProductForm from "../components/AddProductForm";
 import { useGetAllProducts } from "../services/queries";
 
 function ProductsPage() {
@@ -9,7 +10,9 @@ function ProductsPage() {
 
   return <div>
       <h4>Products List:</h4>
-      <ul>{data?.data?.data?.map((product)=>(<li key={product.id}>{product.name}</li>))}</ul>
+      <ul>{data?.map((product)=>(<li key={product.id}>{product.name}</li>))}</ul>
+
+      <AddProductForm/>
       </div>
 }
 
